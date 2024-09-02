@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,7 +44,7 @@ public class TodoController {
         TodoDto todoDto = todoService.getTodoById(todoId);
 
         /** Return something. */
-        return new ResponseEntity<>(todoDto, HttpStatus.OK);
+        return ResponseEntity.ok(todoDto);
     }
 
     /** Build get todos rest api. */
@@ -53,27 +54,46 @@ public class TodoController {
         List<TodoDto> todos = todoService.getAllTodos();
 
         /** Return something. */
-        return new ResponseEntity<>(todos, HttpStatus.OK);
+        return ResponseEntity.ok(todos);
     }
 
     /** Build update todo rest api. */
     @PutMapping("{id}")
     public ResponseEntity<TodoDto> updateTodo(@PathVariable("id") Long todoId, @RequestBody TodoDto updatedTodo) {
         /** Call update todo service. */
-        TodoDto todoDTO = todoService.updateTodo(todoId, updatedTodo);
+        TodoDto todoDto = todoService.updateTodo(todoId, updatedTodo);
 
         /** Return something. */
-        return new ResponseEntity<>(todoDTO, HttpStatus.OK);
+        return ResponseEntity.ok(todoDto);
     }
 
     /** Build delete todo rest api. */
     @DeleteMapping("{id}")
-    public ResponseEntity<TodoDto> deleteTodo(@PathVariable("id") Long todoId) {
+    public ResponseEntity<String> deleteTodo(@PathVariable("id") Long todoId) {
         /** Call delete todo service. */
-        TodoDto todoDto = todoService.deleteTodo(todoId);
+        todoService.deleteTodo(todoId);
 
         /** Return something. */
-        return new ResponseEntity<>(todoDto, HttpStatus.OK);
+        return ResponseEntity.ok("Todo deleted successfully.");
     }
 
+    /** Build complete todo rest api. */
+    @PatchMapping("{id}/complete")
+    public ResponseEntity<TodoDto> completeTodo(@PathVariable("id") Long todoId) {
+        /** Call get todo service. */
+        TodoDto todoDto = todoService.completeTodo(todoId);
+
+        /** Return something. */
+        return ResponseEntity.ok(todoDto);
+    }
+
+    /** Build incomplete todo rest api. */
+    @PatchMapping("{id}/incomplete")
+    public ResponseEntity<TodoDto> inCompleteTodo(@PathVariable("id") Long todoId) {
+        /** Call get todo service. */
+        TodoDto todoDto = todoService.inCompleteTodo(todoId);
+
+        /** Return something. */
+        return ResponseEntity.ok(todoDto);
+    }
 }

@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "allowJs": false,
+        "skipLibCheck": true,
+        "esModuleInterop": false,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "baseUrl": ".",
+        "useUnknownInCatchVariables": false,
+        "paths": {
+            "$lib/*": ["/src/*"],
+            "$css/*": ["./src/css/*"],
+            "$js/*": ["./src/js/*"],
+            "$components/*": ["./src/js/components/*"],
+            "$hooks/*": ["./src/js/hooks/*"],
+            "$store/*": ["./src/js/store/*"]
+        }
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "**/*.test.ts"],
+    "references": [{ "path": "./tsconfig.node.json" }]
+}

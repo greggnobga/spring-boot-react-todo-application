@@ -56,7 +56,7 @@ public class TodoServiceImplementation implements TodoService {
 
     @Override
     public TodoDto updateTodo(Long todoId, TodoDto updatedTodo) {
-         /** Check if employee exist else throw exception. */
+         /** Check if todo exist else throw exception. */
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Todo not found with the id of: " + todoId));
 
@@ -73,15 +73,44 @@ public class TodoServiceImplementation implements TodoService {
     }
 
     @Override
-    public TodoDto deleteTodo(Long todoId) {
-        /** Check if employee exist else throw exception. */
-        Todo todo = todoRepository.findById(todoId)
+    public void deleteTodo(Long todoId) {
+        /** Check if todo exist else throw exception. */
+        todoRepository.findById(todoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Todo not found with the id of: " + todoId));
 
         /** If found set the updated detail. */
         todoRepository.deleteById(todoId);
+    }
 
-         /** Return updated todo. */
-        return modelMapper.map(todo, TodoDto.class);
+    @Override
+    public TodoDto completeTodo(Long todoId) {
+        /** Check if todo exist else throw exception. */
+        Todo todo = todoRepository.findById(todoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Todo not found with the id of: " + todoId));
+
+        /** If found set the updated detail. */
+        todo.setCompleted(Boolean.TRUE);
+
+        /** Save updated todo. */
+        Todo updatedTodo = todoRepository.save(todo);
+
+        /** Return updated todo. */
+        return modelMapper.map(updatedTodo, TodoDto.class);
+    }
+
+    @Override
+    public TodoDto inCompleteTodo(Long todoId) {
+         /** Check if todo exist else throw exception. */
+        Todo todo = todoRepository.findById(todoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Todo not found with the id of: " + todoId));
+
+        /** If found set the updated detail. */
+        todo.setCompleted(Boolean.FALSE);
+
+        /** Save updated todo. */
+        Todo updatedTodo = todoRepository.save(todo);
+
+        /** Return updated todo. */
+        return modelMapper.map(updatedTodo, TodoDto.class);
     }
 }
