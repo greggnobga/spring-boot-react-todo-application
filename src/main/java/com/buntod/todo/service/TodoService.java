@@ -2,8 +2,11 @@ package com.buntod.todo.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.buntod.todo.dto.TodoDto;
 
+@Service
 public interface TodoService {
     /** Add todo. */
     TodoDto addTodo(TodoDto todoDto);

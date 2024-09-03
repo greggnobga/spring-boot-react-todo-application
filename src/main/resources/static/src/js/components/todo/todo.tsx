@@ -22,7 +22,7 @@ const Todo = () => {
     const { id, title, description, completed, action } = location.state || {};
 
     /** Use state. */
-    const [inputCompleted, setInputCompleted] = useState(completed || 0);
+    const [inputCompleted, setInputCompleted] = useState(completed);
 
     /** Map html element to validate hook. */
     const {
@@ -182,22 +182,13 @@ const Todo = () => {
                                 Completed
                             </label>
                             <div className='mt-2'>
-                                <input
-                                    className='mr-2'
-                                    type='radio'
-                                    name='inputCompleted'
-                                    value='true'
-                                    onChange={(e) => setInputCompleted(e.target.value)}
-                                />
-                                Yes
-                                <input
-                                    className='mr-2 ml-2'
-                                    type='radio'
-                                    name='inputCompleted'
-                                    value='false'
-                                    onChange={(e) => setInputCompleted(e.target.value)}
-                                />
-                                No
+                                <select
+                                    className='form-select appearance-none bg-no-repeat bg-slate-50 block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-0 focus:none sm:text-sm sm:leading-6'
+                                    value={inputCompleted}
+                                    onChange={(e) => setInputCompleted(e.target.value)}>
+                                    <option value='true'>Yes</option>
+                                    <option value='false'>No</option>
+                                </select>
                             </div>
                         </div>
                     </div>
