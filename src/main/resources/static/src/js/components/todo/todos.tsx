@@ -11,20 +11,28 @@ import { todoCompletedRequest } from '$store/feature/todo/completed-slice';
 
 const Todos = () => {
     /** Use selector. */
+    const authLogin = useAppSelector((state) => state.authLogin);
+    const { isLogged } = authLogin;
+
     const todoList = useAppSelector((state) => state.todoList);
     const { todos } = todoList;
 
     /** Use dispatch. */
     const dispatch = useAppDispatch();
 
+    /** Use navigate. */
+    const navigator = useNavigate();
+
     /** Use effect. */
     useEffect(() => {
         /** Fetch todo on load. */
         dispatch(todoListRequest());
-    }, []);
 
-    /** Use navigate. */
-    const navigator = useNavigate();
+        /** If not logged go to login page.. */
+        if (!isLogged) {
+            navigator('/login');
+        }
+    }, [isLogged]);
 
     /** Create todo handler. */
     const createTodoHandler = () => {

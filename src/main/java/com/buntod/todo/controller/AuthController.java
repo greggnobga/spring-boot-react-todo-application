@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.buntod.todo.dto.LoginDto;
 import com.buntod.todo.dto.RegisterDto;
+import com.buntod.todo.dto.Response;
 import com.buntod.todo.service.AuthService;
 
 @RestController
@@ -24,12 +26,31 @@ public class AuthController {
 
     /** Build auth register rest api. */
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
-        /** Call auth service register. */
-        String response = authService.register(registerDto);
+    public ResponseEntity<Response> register(@RequestBody RegisterDto registerDto) {
+        /** Call auth register service. */
+        String message = authService.register(registerDto);
 
-        /** Return something/ */
+        /** Custom response. */
+        Response response = new Response(message, true);
+
+        System.out.println(response);
+
+        /** Return something. */
         return ResponseEntity.ok(response);
     }
 
+    /** Build auth login rest api. */
+    @PostMapping("/login")
+    public ResponseEntity<Response> login(@RequestBody LoginDto loginDto) {
+        /** Call auth login service. */
+        String message = authService.login(loginDto);
+
+        /** Custom response. */
+        Response response = new Response(message, true);
+
+        System.out.println(response);
+
+        /** Return something. */
+        return ResponseEntity.ok(response);
+    }
 }

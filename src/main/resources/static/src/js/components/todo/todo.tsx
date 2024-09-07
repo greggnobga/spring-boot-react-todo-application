@@ -14,6 +14,9 @@ import { todoDeleteRequest } from '$store/feature/todo/delete-slice';
 
 const Todo = () => {
     /** Use selector. */
+    const authLogin = useAppSelector((state) => state.authLogin);
+    const { isLogged } = authLogin;
+
     const todoList = useAppSelector((state) => state.todoList);
     const { todos } = todoList;
 
@@ -110,6 +113,14 @@ const Todo = () => {
         /** Back to list of employees. */
         navigator('/todos');
     };
+
+    /** Use effect. */
+    useEffect(() => {
+        /** If not logged go to login page.. */
+        if (!isLogged) {
+            navigator('/login');
+        }
+    }, [isLogged]);
 
     /** Return something. */
     return (

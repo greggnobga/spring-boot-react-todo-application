@@ -3,6 +3,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 /** Reducers. */
+import authRegisterReducer from '$store/feature/auth/register-slice';
+import authLoginReducer from '$store/feature/auth/login-slice';
+
 import todoListReducer from '$store/feature/todo/list-slice';
 import todoCreateReducer from '$store/feature/todo/create-slice';
 import todoUpdateReducer from '$store/feature/todo/update-slice';
@@ -12,6 +15,8 @@ import todoCompletedReducer from '$store/feature/todo/completed-slice';
 /** Configure store. */
 export const store = configureStore({
     reducer: {
+        authLogin: authLoginReducer,
+        authRegister: authRegisterReducer,
         todoList: todoListReducer,
         todoCreate: todoCreateReducer,
         todoUpdate: todoUpdateReducer,

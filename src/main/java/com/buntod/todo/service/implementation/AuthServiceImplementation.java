@@ -4,9 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.buntod.todo.dto.LoginDto;
 import com.buntod.todo.dto.RegisterDto;
 import com.buntod.todo.exception.TodoAPIException;
 import com.buntod.todo.repository.RoleRepository;
@@ -24,6 +29,7 @@ public class AuthServiceImplementation implements AuthService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private AuthenticationManager authenticationManager;
 
     @Override
     public String register(RegisterDto registerDto) {
@@ -53,5 +59,18 @@ public class AuthServiceImplementation implements AuthService {
         userRepository.save(user);
 
         return "User registered successfully!";
+    }
+
+    @Override
+    public String login(LoginDto loginDto) {
+        /** Authenticate user. */
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+
+        /** Add to security context. */
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        /** Return something. */
+        return "User login successfully!";
     }
 }
