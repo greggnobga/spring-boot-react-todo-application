@@ -12,7 +12,7 @@ import { authLoginRequest } from '$store/feature/auth/login-slice';
 const Login = () => {
     /** Use selector. */
     const authLogin = useAppSelector((state) => state.authLogin);
-    const { username } = authLogin;
+    const { token } = authLogin;
 
     /** Map html element to validate hook. */
     const {
@@ -90,7 +90,7 @@ const Login = () => {
                         id='inputUsername'
                         name='inputUsername'
                         type='text'
-                        value={inputUsername ? inputUsername : username}
+                        value={inputUsername}
                         onChange={inputUsernameChangeHandler}
                         onBlur={inputUsernameBlurHandler}
                         autoComplete='off'

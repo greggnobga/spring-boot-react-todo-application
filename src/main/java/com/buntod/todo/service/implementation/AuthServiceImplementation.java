@@ -16,6 +16,7 @@ import com.buntod.todo.dto.RegisterDto;
 import com.buntod.todo.exception.TodoAPIException;
 import com.buntod.todo.repository.RoleRepository;
 import com.buntod.todo.repository.UserRepository;
+import com.buntod.todo.security.JwtTokenProvider;
 import com.buntod.todo.service.AuthService;
 
 import com.buntod.todo.entity.Role;
@@ -30,6 +31,7 @@ public class AuthServiceImplementation implements AuthService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public String register(RegisterDto registerDto) {
@@ -70,7 +72,9 @@ public class AuthServiceImplementation implements AuthService {
         /** Add to security context. */
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        String token = jwtTokenProvider.generateToken(authentication);
+
         /** Return something. */
-        return "User login successfully!";
+        return token;
     }
 }

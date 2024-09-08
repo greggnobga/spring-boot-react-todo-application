@@ -12,9 +12,8 @@ type Error<T> = {
 /** Login type. */
 type Login = {
     loading: boolean;
-    username: string;
     message: string;
-    isLogged: boolean;
+    token: string;
     status: number;
 };
 
@@ -27,9 +26,8 @@ type InputLogin = {
 /** Set inital state. */
 const initialState: Login = {
     loading: false,
-    username: '',
     message: '',
-    isLogged: false,
+    token: '',
     status: 200,
 };
 
@@ -95,15 +93,13 @@ export const authLogin = createSlice({
 
         builder.addCase(authLoginRequest.fulfilled, (state, action: any) => {
             state.loading = false;
-            state.username = action.payload.username;
             state.message = action.payload.message;
-            state.isLogged = action.payload.isLogged;
+            state.token = 'Bearer ' + action.payload.accessToken;
             state.status = action.payload.status;
         });
 
         builder.addCase(authLoginRequest.rejected, (state, action: any) => {
             state.loading = false;
-            state.isLogged = false;
             state.message = action.payload.message;
             state.status = action.payload.status;
         });

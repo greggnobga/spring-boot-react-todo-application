@@ -15,7 +15,7 @@ import { todoDeleteRequest } from '$store/feature/todo/delete-slice';
 const Todo = () => {
     /** Use selector. */
     const authLogin = useAppSelector((state) => state.authLogin);
-    const { isLogged } = authLogin;
+    const { token } = authLogin;
 
     const todoList = useAppSelector((state) => state.todoList);
     const { todos } = todoList;
@@ -78,7 +78,7 @@ const Todo = () => {
 
         /** Dispatch action. */
         if (action === 'update') {
-            await dispatch(todoUpdateRequest({ id, title: inputTitle, description: inputDescription, completed: inputCompleted }));
+            await dispatch(todoUpdateRequest({ id, token, title: inputTitle, description: inputDescription, completed: inputCompleted }));
         } else {
             await dispatch(todoCreateRequest({ title: inputTitle, description: inputDescription, completed: inputCompleted }));
         }
@@ -117,10 +117,10 @@ const Todo = () => {
     /** Use effect. */
     useEffect(() => {
         /** If not logged go to login page.. */
-        if (!isLogged) {
+        if (!token) {
             navigator('/login');
         }
-    }, [isLogged]);
+    }, [token]);
 
     /** Return something. */
     return (

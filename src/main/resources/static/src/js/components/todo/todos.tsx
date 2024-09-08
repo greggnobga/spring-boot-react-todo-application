@@ -12,7 +12,7 @@ import { todoCompletedRequest } from '$store/feature/todo/completed-slice';
 const Todos = () => {
     /** Use selector. */
     const authLogin = useAppSelector((state) => state.authLogin);
-    const { isLogged } = authLogin;
+    const { token } = authLogin;
 
     const todoList = useAppSelector((state) => state.todoList);
     const { todos } = todoList;
@@ -29,10 +29,10 @@ const Todos = () => {
         dispatch(todoListRequest());
 
         /** If not logged go to login page.. */
-        if (!isLogged) {
+        if (!token) {
             navigator('/login');
         }
-    }, [isLogged]);
+    }, [token]);
 
     /** Create todo handler. */
     const createTodoHandler = () => {
@@ -64,6 +64,7 @@ const Todos = () => {
         navigator('/update-todo', {
             state: {
                 id,
+                token,
                 title: details[0].title,
                 description: details[0].description,
                 completed: details[0].completed,

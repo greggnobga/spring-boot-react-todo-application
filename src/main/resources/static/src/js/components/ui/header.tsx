@@ -7,7 +7,7 @@ import { useAppSelector } from '$hooks/use-rtk';
 const Header = () => {
     /** Use selector. */
     const authLogin = useAppSelector((state) => state.authLogin);
-    const { isLogged } = authLogin;
+    const { token } = authLogin;
 
     return (
         <div className='container mx-auto p-4'>
@@ -18,7 +18,7 @@ const Header = () => {
                     </NavLink>
                 </div>
                 <div>
-                    {isLogged ? (
+                    {token ? (
                         <>
                             <NavLink className={({ isActive }) => (isActive ? 'px-2 text-rose-200' : 'px-2')} to='/todos'>
                                 Todos

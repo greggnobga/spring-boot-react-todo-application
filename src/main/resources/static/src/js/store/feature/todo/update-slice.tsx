@@ -22,6 +22,7 @@ type Todo = {
 /** Todo input type. */
 type InputTodo = {
     id: string;
+    token: string;
     title: string;
     description: string;
     completed: any;
@@ -43,7 +44,7 @@ export const todoUpdateRequest = createAsyncThunk<any, InputTodo, { rejectValue:
     async (inputData, { rejectWithValue }) => {
         try {
             /** Deconstruct input data. */
-            const { id, title, description, completed } = inputData;
+            const { id, token, title, description, completed } = inputData;
 
             /** Prepare form data. */
             let form_data = new FormData();
@@ -56,6 +57,7 @@ export const todoUpdateRequest = createAsyncThunk<any, InputTodo, { rejectValue:
             const { data, status } = await axios({
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: token,
                 },
                 method: 'PUT',
                 url: `/api/todos/${id}`,

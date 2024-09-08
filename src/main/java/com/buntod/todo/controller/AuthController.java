@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.buntod.todo.dto.LoginDto;
 import com.buntod.todo.dto.RegisterDto;
-import com.buntod.todo.dto.Response;
+import com.buntod.todo.dto.ApiResponse;
+import com.buntod.todo.dto.JwtAuthResponse;
 import com.buntod.todo.service.AuthService;
 
 @RestController
@@ -26,14 +27,12 @@ public class AuthController {
 
     /** Build auth register rest api. */
     @PostMapping("/register")
-    public ResponseEntity<Response> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<ApiResponse> register(@RequestBody RegisterDto registerDto) {
         /** Call auth register service. */
         String message = authService.register(registerDto);
 
         /** Custom response. */
-        Response response = new Response(message, true);
-
-        System.out.println(response);
+        ApiResponse response = new ApiResponse(message, true);
 
         /** Return something. */
         return ResponseEntity.ok(response);
@@ -41,16 +40,15 @@ public class AuthController {
 
     /** Build auth login rest api. */
     @PostMapping("/login")
-    public ResponseEntity<Response> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto) {
         /** Call auth login service. */
-        String message = authService.login(loginDto);
+        String token = authService.login(loginDto);
 
         /** Custom response. */
-        Response response = new Response(message, true);
-
-        System.out.println(response);
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
 
         /** Return something. */
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(jwtAuthResponse);
     }
 }
